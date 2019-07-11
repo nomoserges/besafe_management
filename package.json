@@ -1,15 +1,14 @@
 {
-  "name": "webix-jet-app",
-  "version": "1.1.0",
-  "description": "Webix Jet App",
-  "main": "sources/myapp.js",
+  "name": "admin-app",
+  "version": "1.0.0",
+  "description": "Admin Demo",
+  "main": "sources/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint sources/",
     "build": "webpack --env.production true",
-    "module": "webpack --env.production true --env.module true",
-    "standalone": "webpack --env.production true --env.module true --env.standalone true",
-    "start": "webpack-dev-server --open"
+    "start": "webpack-dev-server",
+    "deploy": "yarn build && rsync -ar index.html codebase webix.com:/root/composer/snippet.webix.com/admin/"
   },
   "keywords": [
     "webix",
@@ -19,21 +18,18 @@
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
-    "babel-plugin-syntax-dynamic-import": "^6.18.0",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.0",
     "css-loader": "^0.28.7",
     "eslint": "^4.7.2",
+    "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^0.11.2",
     "less": "^2.7.2",
     "less-loader": "^4.0.5",
-    "mini-css-extract-plugin": "^0.4.0",
     "url-loader": "^0.5.9",
-    "webpack": "^4.12.1",
-    "webpack-cli": "^3.0.8",
-    "webpack-dev-server": "^3.1.4"
+    "webpack": "^3.6.0",
+    "webpack-dev-server": "^2.8.2"
   },
   "dependencies": {
-    "webix-jet": "^2.0.4"
+    "webix-jet": "^2.0.0"
   }
 }

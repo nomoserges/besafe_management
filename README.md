@@ -1,43 +1,33 @@
-Example of Webix MVC Admin App
-===============================
+Team Progress Demo App (for the new Webix skin)
+===================
 
-Live demo
-----------
+A demo that allows viewing and controlling the working progress of a team.
 
-- Material skin - http://webix.com/demos/admin-app/
+### How to run
 
-Older versions
-----------
-Demo in this repo uses latest Webix (6.0+) and Webix Jet 2.x, if you want to check older version, check
+- run ```npm install``` or ```yarn install```
+- run ```npm start``` or ```yarn start```
+- open ```http://localhost:8080```
 
-- Flat skin, Jet 0.x - https://github.com/webix-hub/webix-adminapp-demo/tree/jet0
-- Material skin, Jet 0.x - https://github.com/webix-hub/webix-adminapp-demo/tree/material-jet0
-- Flat skin, Jet 1.x - https://github.com/webix-hub/webix-adminapp-demo/tree/jet1
-- Material skin, Jet 1.x - https://github.com/webix-hub/webix-adminapp-demo/tree/material-jet1
-
-
-Technical details
-------------------
-
-### Run
-
-- clone repo from git
-- run `npm install`
-- run `npm start`
-- open `http://localhost:8080` in a browser 
-
-### Deploy
-
-- run `npm run build`
-- copy "index.html", "data" and "codebase" folders to the server
+For more details, check https://www.gitbook.com/book/webix/webix-jet/details
 
 ### Other commands
 
-- `npm run lint` - will validate all js code in the project
+#### Run lint
+
+```
+npm run lint
+```
+
+#### Build production files
+
+```
+npm run build
+```
+
+After that you can copy the "codebase" folder to the production server
 
 
-License
----------
+### License
 
-All code in this repo is available under the MIT License
-
+MIT

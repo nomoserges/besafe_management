@@ -4,39 +4,44 @@ var webpack = require("webpack");
 module.exports = function(env) {
 
 	var pack = require("./package.json");
-	var ExtractTextPlugin = require("extract-text-webpack-plugin");
+	var MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
 	var production = !!(env && env.production === "true");
+	var asmodule = !!(env && env.module === "true");
+	var standalone = !!(env && env.standalone === "true");
+
 	var babelSettings = {
 		extends: path.join(__dirname, '/.babelrc')
 	};
 
 	var config = {
-		entry: "./sources/app.js",
+		mode: production ? "production" : "development",
+		entry: {
+			myapp: "./sources/myapp.js"
+		},
 		output: {
 			path: path.join(__dirname, "codebase"),
 			publicPath:"/codebase/",
-			library: "AppDemo",
-			libraryExport: "default",
-    		libraryTarget: "var",
-			filename: "app.js"
+			filename: "[name].js",
+			chunkFilename: "[name].bundle.js"
 		},
-		devtool: "inline-source-map",
 		module: {
 			rules: [
 				{
 					test: /\.js$/,
-					loader: "babel-loader?" + JSON.stringify(babelSettings)
+					use: "babel-loader?" + JSON.stringify(babelSettings)
 				},
 				{
 					test: /\.(svg|png|jpg|gif)$/,
-					loader: "url-loader?limit=25000"
+					use: "url-loader?limit=25000"
 				},
 				{
 					test: /\.(less|css)$/,
-					loader: ExtractTextPlugin.extract("css-loader!less-loader")
+					use: [ MiniCssExtractPlugin.loader, "css-loader", "less-loader" ]
 				}
 			]
 		},
+		stats:"minimal",
 		resolve: {
 			extensions: [".js"],
 			modules: ["./sources", "node_modules"],
@@ -46,21 +51,36 @@ module.exports = function(env) {
 			}
 		},
 		plugins: [
-			new ExtractTextPlugin("./app.css"),
+			new MiniCssExtractPlugin({
+				filename:"[name].css"
+			}),
 			new webpack.DefinePlugin({
 				VERSION: `"${pack.version}"`,
 				APPNAME: `"${pack.name}"`,
-				PRODUCTION : production
+				PRODUCTION : production,
+				BUILD_AS_MODULE : (asmodule || standalone)
 			})
-		]
+		],
+		devServer:{
+			stats:"errors-only"
+		}
 	};
 
-	if (production) {
-		config.plugins.push(
-			new  webpack.optimize.UglifyJsPlugin({
-				test: /\.js$/
-			})
-		);
+	if (!production){
+		config.devtool = "inline-source-map";
+	} else {
+		config.devtool = "source-map";
+	}
+
+	if (asmodule){
+		if (!standalone){
+			config.externals = config.externals || {};
+			config.externals = [ "webix-jet" ];
+		}
+
+		const out = config.output;
+		out.library = pack.name.replace(/[^a-z0-9]/gi, "");
+		out.libraryTarget= "umd";
 	}
 
 	return config;

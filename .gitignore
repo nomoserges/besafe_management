@@ -1,5 +1,8 @@
-.idea/
-codebase/
-node_modules/
+.DS_Store
+.idea
+node_modules
 *.log
-dist/
+*.tar
+
+codebase/app.js
+codebase/app.css

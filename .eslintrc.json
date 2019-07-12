@@ -5,16 +5,12 @@
     },
     "globals":{
         "webix":true,
-        "scheduler":true,
-        "APPNAME":true, "VERSION":true, "PRODUCTION":true, "BUILD_AS_MODULE":true
+        "remote":true,
+        "APPNAME":true, "VERSION":true, "PRODUCTION":true
     },
     "extends": "eslint:recommended",
     "parserOptions": {
-        "sourceType": "module",
-        "ecmaFeatures": {
-            "jsx": true,
-            "experimentalObjectRestSpread": true
-        }
+        "sourceType": "module"
     },
     "rules": {
         "indent": [

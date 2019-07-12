@@ -1,2 +1,2 @@
-export const apiURL = 'http://localhost/besafe_core/backend/';
 
+export const apiURL = 'http://localhost/besafe_core/index.php/backend/'

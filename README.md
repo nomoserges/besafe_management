@@ -1,33 +1,43 @@
-Banking Demo App (for the new Webix skin)
-===================
+Example of Webix MVC Admin App
+===============================
 
-A demo for viewing, analyzing and editing financial data.
+Live demo
+----------
 
-### How to run
+- Material skin - http://webix.com/demos/admin-app/
 
-- run ```npm install``` or ```yarn install```
-- run ```npm start``` or ```yarn start```
-- open ```http://localhost:8080```
+Older versions
+----------
+Demo in this repo uses latest Webix (6.0+) and Webix Jet 2.x, if you want to check older version, check
 
-For more details, check https://www.gitbook.com/book/webix/webix-jet/details
+- Flat skin, Jet 0.x - https://github.com/webix-hub/webix-adminapp-demo/tree/jet0
+- Material skin, Jet 0.x - https://github.com/webix-hub/webix-adminapp-demo/tree/material-jet0
+- Flat skin, Jet 1.x - https://github.com/webix-hub/webix-adminapp-demo/tree/jet1
+- Material skin, Jet 1.x - https://github.com/webix-hub/webix-adminapp-demo/tree/material-jet1
+
+
+Technical details
+------------------
+
+### Run
+
+- clone repo from git
+- run `npm install`
+- run `npm start`
+- open `http://localhost:8080` in a browser 
+
+### Deploy
+
+- run `npm run build`
+- copy "index.html", "data" and "codebase" folders to the server
 
 ### Other commands
 
-#### Run lint
-
-```
-npm run lint
-```
-
-#### Build production files
-
-```
-npm run build
-```
-
-After that you can copy the "codebase" folder to the production server
+- `npm run lint` - will validate all js code in the project
 
 
-### License
+License
+---------
 
-MIT
+All code in this repo is available under the MIT License
+

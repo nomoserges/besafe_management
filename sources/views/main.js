@@ -11,13 +11,14 @@ export default class TopView extends JetView {
 			localId:"menu",
 			view:"sidebar", css:"webix_dark", width:200,
 			data:[
-				{ id:"dash", value:"Dashboard", icon:"mdi mdi-view-dashboard" },
-				{ id:"charts", value:"Charts", icon:"mdi mdi-chart-areaspline" },
+				/*{ id:"dash", value:"Dashboard", icon:"mdi mdi-view-dashboard" },
+				{ id:"charts", value:"Charts", icon:"mdi mdi-chart-areaspline" },*/
+				{ id:"customers", value:"Customers", icon:"mdi mdi-format-line-style"  },
 				{ id:"tables", value:"Tables", icon:"mdi mdi-table" },
-				{ id:"forms", value:"Forms", icon:"mdi mdi-format-line-style"  },
-				{ id:"kanban", value:"Kanban", icon:"mdi mdi-view-column"  },
+				{ id:"forms", value:"Forms", icon:"mdi mdi-format-line-style"  }
+				/*{ id:"kanban", value:"Kanban", icon:"mdi mdi-view-column"  },
 				{ id:"pivot", value:"Pivot", icon:"mdi mdi-layers"  },
-				{ id:"files", value:"File Manager", icon:"mdi mdi-folder-star"  }
+				{ id:"files", value:"File Manager", icon:"mdi mdi-folder-star"  }*/
 			]
 		};
 

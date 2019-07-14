@@ -4,17 +4,16 @@ export default class TablesView extends JetView{
 	config(){
 		return {
 			type:"space",
-			rows:[
-				{
+			rows:[{
 					type:"wide", cols:[
-						{ $subview:"tables.transactions" },
-						{ $subview:"tables.films" }
+						{ $subview:"tables.customers" }/*,
+						{ $subview:"tables.films" }*/
 					]
 				},
 				{
 					type:"wide", cols:[
-						{ $subview:"tables.features" },
-						{ $subview:"tables.widgets" }
+						{ $subview:"tables.phones" },
+						{ $subview:"tables.emails" }
 					]
 				}
 			]

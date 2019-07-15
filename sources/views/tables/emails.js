@@ -5,17 +5,21 @@ export default class EmailsView extends JetView {
     config() {
         return {
             rows:[
-                { id: "emailsform",
-                  view:"form",
-                  elements: [{
-                    cols:[
-                        { view:"text", name:"email", label:"Email"},
-                        { view:"button", width: 100, label:"Save" , type:"form", click:"$$('emailsform').save()" },
-                        { view:"button", width: 100, label:"Clear", click:"$$('emailsform').clear();" }
-                    ]
-                  }]
+                {
+                    id: "emailsform", localId: "emailsform",
+                    view:"form",
+                    elements: [{
+                        cols:[
+                            { view:"text", name:"u_email", label:"Email"},
+                            { view: "text", name: "userid", label: "UserID", hidden: true },
+                                { view: "button", width: 100, label: "Save", type: "form", click: () => this.saveForm() },
+                            { view:"button", width: 100, label:"Clear", click:"$$('emailsform').clear();" }
+                        ], rules: {
+                        "u_email": webix.rules.isEmail
+                        }
+                    }]
                 },{
-                    view:"datatable", localId:"grid", id:"customerstable",
+                    view: "datatable", localId:"emailstable", id:"emailstable",
                     select:true, tooltip:true,
                     url: apiURL + "getemails/",
                     headermenu:{
@@ -25,10 +29,10 @@ export default class EmailsView extends JetView {
                     columns:[
                         { 
                             id:"id", header:"id", width:50
-                        },/*{ 
-                            id:"pseudo", header:"pseudo", sort:"text", adjust:"data",
-                            fillspace:1, minWidth:100,
-                        },*/{ 
+                        },{ 
+                            id: "userid", header:"userid", sort:"text", adjust:"data",
+                            fillspace: 1, minWidth: 100, hidden: true
+                        },{ 
                             id:"firstname", header:"First name", sort:"text", adjust:"data",
                             fillspace:1, minWidth:100,
                         },{ 
@@ -42,6 +46,18 @@ export default class EmailsView extends JetView {
         }
     };
 
+    saveForm() {
+        const emailForm = this.$$("emailsform").getValues();
+        if (this.$$("emailsform").validate()) {
+            webix.ajax(apiURL + "addemail/", emailForm).then(function (data) {
+                //console.log(data.json());
+                if (data.json().data.msgType == "success") {
+                    webix.message(data.json().data.msgBody);
+                }
+                $$("emailstable").load($$("emailstable").config.url);
+            });
+        }
+    }
 
     init(view){
         

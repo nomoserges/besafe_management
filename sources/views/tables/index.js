@@ -18,5 +18,6 @@ export default class TablesView extends JetView{
 				}
 			]
 		};
-	}
+	};
+	
 }

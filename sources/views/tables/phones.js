@@ -6,17 +6,19 @@ export default class PhonesView extends JetView {
     config() {
         return {
             rows:[
-                { id: "phonesform",
-                  view:"form",
-                  elements: [{
-                    cols:[
-                        { view:"text", name:"phone_number", label:"Phoner"},
-                        { view:"button", width: 100, label:"Save" , type:"form", click:"$$('phonesform').save()" },
-                        { view:"button", width: 100, label:"Clear", click:"$$('phonesform').clear();" }
-                    ]
-                  }]
+                { 
+                    id: "phonesform", localId: "phonesform",
+                    view:"form",
+                    elements: [{
+                        cols:[
+                            { view:"text", name:"u_phone_number", label:"Phone"},
+                            { view: "text", name: "userid", label: "UserID", hidden: true },
+                            { view: "button", width: 100, label: "Save", type: "form", click: () => this.saveForm() },
+                            { view:"button", width: 100, label:"Clear", click:"$$('phonesform').clear();" }
+                        ]
+                    }]
                 },{ 
-                    view:"datatable", localId:"grid", id:"customerstable",container:"box",
+                    view: "datatable", localId:"phonestable", id:"phonestable",container:"box",
                     select:true, tooltip:true,
                     url: apiURL + "getphones/",
                     headermenu:{
@@ -26,10 +28,10 @@ export default class PhonesView extends JetView {
                     columns:[
                         { 
                             id:"id", header:"id", width:50
-                        },/*{ 
-                            id:"pseudo", header:"pseudo", sort:"text", adjust:"data",
-                            fillspace:1, minWidth:100,
-                        },*/{ 
+                        },{ 
+                            id: "userid", header:"userid", sort:"text", adjust:"data",
+                            fillspace: 1, minWidth: 100, hidden: true
+                        },{ 
                             id:"firstname", header:"First name", sort:"text", adjust:"data",
                             fillspace:1, minWidth:100,
                         },{ 
@@ -46,6 +48,17 @@ export default class PhonesView extends JetView {
         }
     };
 
+    saveForm() {
+        const phonesForm = this.$$("phonesform").getValues();
+        if (this.$$("phonesform").validate()) {
+            webix.ajax(apiURL + "addphone/", phonesForm).then(function (data) {
+                //console.log(data.json());
+                if (data.json().data.msgType == "success") {
+                    webix.message(data.json().data.msgBody);
+                }
+            });
+        }
+    }
 
     init(view){
         

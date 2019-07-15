@@ -19,37 +19,48 @@ export default class CustomersView extends JetView {
                         }
                     ]
                 }, {
-                    view:"datatable", localId:"grid", id:"customerstable",
-                    select:true, tooltip:true,
+                    view: "datatable", localId:"customerstable", id:"customerstable",
+                    select: true, tooltip: true, resizeColumn: true, resizeRow: false,
                     url: apiURL + "getcostumers",
                     headermenu:{
-                        autowidth:false,
+                        autowidth:true,
                         scroll:true
                     },
                     columns:[
                         { 
-                            id:"userid", header:"id", headermenu:true
-                        },{ 
+                            id: "userid", header: "id", hidden: true
+                        },/*{ 
                             id:"pseudo", header:"pseudo", sort:"text", adjust:"data",
                             fillspace:1, minWidth:100,
+                        },*/{ 
+                            id: "firstname", header: ["First name", { content: "textFilter" }], sort:"string", adjust:"data",
+                            fillspace: true,width: 200
                         },{ 
-                            id:"firstname", header:"First name", sort:"text", adjust:"data",
-                            fillspace:1, minWidth:100,
+                            id: "lastname", header: ["Last name", { content: "textFilter" }], sort: "string", adjust: "data", fillspace: true 
                         },{ 
-                            id:"lastname", header:"Last name", sort:"text", adjust:"data" 
+                            id: "dob", header: "Date of birth", sort: "string", format: webix.Date.dateToStr("%j %F %Y"), fillspace: true
                         },{ 
-                            id:"dob", header:"Date of birth", sort:"text", format:webix.Date.dateToStr("%j %F")
+                            id: "gender", header: ["Gender", { content: "selectFilter" }], sort: "string", adjust: "data", fillspace: true
                         },{ 
-                            id:"gender", header:"Gender", sort:"text", adjust:"data" 
-                        },{ 
-                            id:"country", header:"Country", sort:"text", adjust:"data" 
+                            id: "country", header: "Country", sort: "string", adjust: "data", fillspace: true 
+                        }, {
+                            id: "town", header: "Town", sort: "string", adjust: "data", fillspace: true
+                        }, {
+                            id: "place", header: "Place", sort: "string", adjust: "data", fillspace: true
+                        }, {
+                            id: "job_title", header: "Job", sort: "string", adjust: "data", fillspace: true
                         },
                     ],
                     on:{
-                        onHeaderClick:function(id, e, node){
-                            if (e.target.className == "webix_button webixtype_base"){
-                                NewCustomerPopup.showWindow();
-                            }
+                        onAfterSelect: userid => {
+                            $$("emailstable").bind($$("customerstable"), function (obj, filter) {
+                                $$('emailsform').setValues({ userid: filter.userid});
+                                return obj.userid == filter.userid;
+                            });
+                            $$("phonestable").bind($$("customerstable"), function (obj, filter) {
+                                $$('phonesform').setValues({ userid: filter.userid });
+                                return obj.userid == filter.userid;
+                            });
                         }
                     }
                 }

@@ -1,8 +1,9 @@
 import {JetView} from "webix-jet";
+import {apiURL} from "../../globals"
 
 export default class NewCustomerPopup extends JetView {
 	config(){
-	
+		const dateFormat = webix.Date.dateToStr("%d/%m/%Y");
 		return {
 			view:"window",
 			position:"center",
@@ -10,42 +11,59 @@ export default class NewCustomerPopup extends JetView {
 			head: "New customer",
 			body:{
 				view:"form",
+				id: "form",
 				localId:"form",
 				elementsConfig:{ labelPosition:"top" },
 				rows:[
-					{ view: "text", label: "Tâche", name:"task", width:500 },
 					{
+						cols: [
+							{ view: "text", label: "Firstname", name: "u_firstname", width: 200 },
+							{ view: "text", label: "Lastname", name: "u_lastname", width: 200 },
+						]
+					},{
 						cols:[
 							{
-								view:"combo", label:"Projets",
-								name:"project", options:[{ id:"transtar", value:"Transtar" },
-								{ id:"kasma", value:"Kasma" },
-								{ id:"typhon", value:"Typhon&Co" }]
+								view: "combo", label: "Gender", width: 200,
+								name:"u_gender", options:[
+									{ id:"female", value:"female" },
+									{ id:"male", value:"male" }]
 							},
-							{
-								view:"combo", label:"Assignée à",
-								name:"user", options:[{ id:"transtar", value:"Transtar" },
-								{ id:"kasma", value:"Kasma" },
-								{ id:"typhon", value:"Typhon&Co" }]
-							}
+							{ view: "datepicker", label: "Date of birth", name: "u_dob",
+								placeholder: "Click to select", format: dateFormat, width: 200 },
+						]
+					},{
+						cols: [
+							{ view: "text", label: "Country", name: "u_country", width: 200 },
+							{ view: "text", label: "Town", name: "u_town", width: 200 },
+						]
+					}, {
+						cols: [
+							{ view: "text", label: "Place", name: "u_place", width: 200 },
+							{ view: "text", label: "Job title", name: "u_job_title", width: 200 },
 						]
 					},
 					{
 						cols:[
 							{
-								view:"button", value:"Annuler",
+								view:"button", value:"Cancel",
 								click:() => this.getBack()
 							},
 							{
-								view:"button", value:"Ajouter", type:"form",
+								view:"button", value:"Save", type:"form",
 								click:() => this.saveTask()
 							}
 						]
 					}
 				],
 				rules:{
-					user:webix.rules.isNotEmpty,
-					task:webix.rules.isNotEmpty
+					u_firstname:webix.rules.isNotEmpty,
+					u_lastname:webix.rules.isNotEmpty,
+					u_gender: webix.rules.isNotEmpty,
+					u_dob: webix.rules.isNotEmpty,
+					u_country: webix.rules.isNotEmpty,
+					u_town: webix.rules.isNotEmpty,
+					u_place: webix.rules.isNotEmpty,
+					u_job_title: webix.rules.isNotEmpty
 				}
 			}
 		};
@@ -61,7 +79,12 @@ export default class NewCustomerPopup extends JetView {
 	saveTask(){
 		const task = this.$$("form").getValues();
 		if (this.$$("form").validate()){
-			this.app.callEvent("add:task",[task]);
+			webix.ajax(apiURL + "newcostumer/", task).then(function (data) {
+				//console.log(data.json());
+				if (data.json().data.msgType == "success") {
+					webix.message(data.json().data.msgBody);
+				}
+			});
 			this.getBack();
 		}
 	}

@@ -29,7 +29,9 @@ export default class CustomersView extends JetView{
 			]
 		};
 	}
+	
 	init(){
 		this.newtask = this.ui(NewCustomerPopup);
+		
 	}
 }

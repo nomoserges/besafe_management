@@ -42,13 +42,9 @@ export default class CustomersView extends JetView {
                     ],
                     on: {
                         onAfterSelect: userid => {
-                            $$("emailstable").bind($$("customerstable"), function (obj, filter) {
-                                $$('emailsform').setValues({ userid: filter.userid });
-                                return obj.userid == filter.userid;
-                            });
-                            $$("phonestable").bind($$("customerstable"), function (obj, filter) {
-                                $$('phonesform').setValues({ userid: filter.userid });
-                                return obj.userid == filter.userid;
+                            $$("carusersTables").bind($$("vechiclesTables"), function (obj, filter) {
+                                $$('carsusersForm').setValues({ v_reference: filter.reference });
+                                return obj.reference == filter.reference;
                             });
                         }
                     }

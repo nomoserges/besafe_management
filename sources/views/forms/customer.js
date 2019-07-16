@@ -87,5 +87,6 @@ export default class NewCustomerPopup extends JetView {
 			});
 			this.getBack();
 		}
+		$$("customerstable").loadNext(-1, 0);
 	}
 }

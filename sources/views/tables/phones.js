@@ -58,6 +58,7 @@ export default class PhonesView extends JetView {
                 }
             });
         }
+        $$("phonestable").loadNext(-1, 0);
     }
 
     init(view){

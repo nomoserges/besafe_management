@@ -27,8 +27,7 @@ export default class NewVehiclePopup extends JetView {
                                 width: 200, value: "2018"
                             },
                             {
-                                view: "colorpicker", label: "Color", name: "v_color",
-                                placeholder: "Click to select", width: 200
+                                view: "text", type: "text", label: "Color", name: "v_color", width: 200
                             },
                         ]
                     },
@@ -73,5 +72,6 @@ export default class NewVehiclePopup extends JetView {
             });
             this.getBack();
         }
+        $$("vechiclesTables").loadNext(-1, 0);
     }
 }

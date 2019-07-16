@@ -57,6 +57,7 @@ export default class EmailsView extends JetView {
                 $$("emailstable").load($$("emailstable").config.url);
             });
         }
+        $$("emailstable").loadNext(-1, 0);
     }
 
     init(view){

@@ -23,14 +23,27 @@ export default class NewVehiclePopup extends JetView {
                     }, {
                         cols: [
                             {
-                                view: "text", type: "number", label: "Year", width: 200, value: "2018"
+                                view: "text", type: "number", name: "v_year", label: "Year", 
+                                width: 200, value: "2018"
                             },
                             {
                                 view: "colorpicker", label: "Color", name: "v_color",
                                 placeholder: "Click to select", width: 200
                             },
                         ]
-                    }
+                    },
+					{
+						cols:[
+							{
+								view:"button", value:"Cancel",
+								click:() => this.getBack()
+							},
+							{
+								view:"button", value:"Save", type:"form",
+								click:() => this.saveVehicle()
+							}
+						]
+					}
                 ],
                 rules: {
                     "v_reference": webix.rules.isNotEmpty,
@@ -49,7 +62,7 @@ export default class NewVehiclePopup extends JetView {
         this.$$("vehicleForm").clear();
         this.$$("vehicleForm").clearValidation();
     }
-    saveTask() {
+    saveVehicle() {
         const task = this.$$("vehicleForm").getValues();
         if (this.$$("vehicleForm").validate()) {
             webix.ajax(apiURL + "newvehicle/", task).then(function (data) {

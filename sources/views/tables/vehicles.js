@@ -21,7 +21,7 @@ export default class CustomersView extends JetView {
                 }, {
                     view: "datatable", localId: "vechiclesTables", id: "vechiclesTables",
                     select: true, tooltip: true, resizeColumn: true, resizeRow: false,
-                    //url: apiURL + "getcostumers",
+                    url: apiURL + "getallvehicles/",
                     headermenu: {
                         autowidth: true,
                         scroll: true

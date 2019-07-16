@@ -19,9 +19,23 @@ export default class CarsusersView extends JetView {
                                     { id: "male", value: "male" }]
                             },{
                                 view: "combo", label: "User type",
-                                name: "v_type_relation", options: [
-                                    { id: "driver", value: "driver" },
-                                    { id: "owner", value: "owner" }]
+                                name: "v_type_relation",
+                                options: {
+                                    keyPressTimeout: 500,
+                                    body: {
+                                        dataFeed:function(str){
+                                        if(!str.match(/\w/g))
+                                            return;
+                                            return webix.ajax().bind(this).get(apiURL +"?filter[value]="+str, function(data){
+                                            this.parse(data);
+                                        });
+                                        },  
+                                        url:apiURL, 
+                                        ready: function (){  
+                                        $$("combo").setValue(this.data.getFirstId())
+                                        }
+                                    }
+                                }
                             },
                             { view: "text", name: "v_type_owner", label: "Owner type" },
                             { view: "text", name: "v_num_driver", label: "Driver ID"},
